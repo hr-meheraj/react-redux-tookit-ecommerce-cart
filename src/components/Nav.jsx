@@ -5,15 +5,15 @@ function Nav() {
     const cartArr = useSelector(state => state.cart);
     const [scrolling, setScrolling] = useState(0);
     console.log(cartArr);
-    
+
     useEffect(() => {
         document.addEventListener("scroll", () => {
                 setScrolling(window.scrollY);
-                console.log(scrolling);
+               
         })
     },[scrolling]);
     return (
-        <div className={`navbar ${scrolling > 150 && "fixed border-2 border-blue shadow-md bg-white transition-all top-0 right-0 left-0  mx-auto max-w-[1000px]"}`}>
+        <div className={`navbar ${scrolling > 100 && "fixed border-2 border-blue shadow-md bg-white transition-all top-0 right-0 left-0  mx-auto max-w-[1000px]"}`}>
             <div className="flex-1">
                 <Link to='/' className="btn btn-ghost normal-case md:text-xl  text-[16px]">Redux Ecommerce</Link>
             </div>

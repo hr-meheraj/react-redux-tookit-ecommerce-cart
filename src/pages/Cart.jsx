@@ -5,6 +5,17 @@ import { removeFromCart } from '../features/cart/cartSlice';
 export default function Cart() {
   const cartItems = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const initialValue = 0;
+  const totalPriceArr =  [];
+  cartItems.forEach( e => {
+    totalPriceArr.push(e.price);
+  })
+  const total = totalPriceArr.reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0
+  );
+  console.log(totalPriceArr);
+  console.log(total);
+
   return (
     <div className='my-[40px] '>
       <div class="overflow-x-auto w-full">
@@ -18,6 +29,9 @@ export default function Cart() {
             </tr>
           </thead>
           <tbody>
+            {
+              cartItems.length == 0 && <h2 className='mt-[20px] text-center text-gray-500'>No Product Cart yet </h2> 
+            }
            {
             cartItems?.map(cart => {
               const { image, id, title, price, category}  = cart;
@@ -47,6 +61,31 @@ export default function Cart() {
           </tbody>
 
         </table>
+
+        {
+          cartItems.length > 0 && (
+            <div className='my-[70px] mx-auto max-w-[720px]'>
+              More Details :
+              <hr className='my-3' />
+              <div className='flex justify-between mb-3'>
+                <h2 className=''>Total Products : </h2>
+                <h2 className='font-semibold'>{cartItems.length}</h2>
+              </div>
+
+              <div className='flex justify-between mb-3'>
+                <h2 className=''>Shipping Charge {"  "} <span className="badge badge-accent mb-3">{" "} Free {" "}</span> : </h2>
+                <h2 className='font-semibold'>$0 </h2>
+              </div>
+
+              <div className='flex justify-between mb-3 mt-2'>
+                <h2 className=''>Total Amount : </h2>
+                <h2 className='font-bold text-xl'>${total}</h2>
+              </div>
+            </div>
+          )
+          
+        }
+        
       </div>
     </div>
   )

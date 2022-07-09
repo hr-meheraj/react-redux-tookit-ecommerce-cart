@@ -18,7 +18,7 @@ export default function Products() {
     getProducts();
   }, [])
   return (
-    <div>
+    <div className='mb-[50px]'>
       <h2 className='text-xl mb-[20px]'>Products :</h2>
       {
         products.length == 0 && (
