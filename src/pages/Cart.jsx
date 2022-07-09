@@ -1,8 +1,10 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeFromCart } from '../features/cart/cartSlice';
 
 export default function Cart() {
   const cartItems = useSelector(state => state.cart);
+  const dispatch = useDispatch();
   return (
     <div className='my-[40px] '>
       <div class="overflow-x-auto w-full">
@@ -36,7 +38,7 @@ export default function Cart() {
                     <div class="">Category : <span className="badge badge-accent mb-3">{category}</span> </div>
                   </td>
                   <td className='text-xl font-semibold'>${price}</td>
-                  <td><button className='btn btn-sm btn-error'>Cancel</button></td>
+                  <td><button className='btn btn-sm btn-error' onClick={() => dispatch(removeFromCart(cart))}>Cancel</button></td>
                 </tr>
               )
             })
