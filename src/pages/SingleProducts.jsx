@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom'
 import { addCart, removeFromCart } from '../features/cart/cartSlice';
 function SingleProducts() {
   const { id } = useParams();
-  const data = JSON.parse(sessionStorage.getItem("store"))[id + 1];
-  console.log(data);
+  const data = JSON.parse(sessionStorage.getItem("store")).find(e => e.id == id);
   const ratings = [...Array(Math.round(data.rating.rate)).keys()].map(e => "⭐")
   console.log("insdie ratings", ratings);
   const dispatch = useDispatch();
