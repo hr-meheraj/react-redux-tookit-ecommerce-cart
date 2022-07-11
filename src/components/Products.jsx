@@ -4,9 +4,11 @@ import ProductCart from './ProductCart';
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState(products || []);
+  const [loading ,setLoading] = useState(false);
   const [choosenCategory, setChoosenCategory] = useState("All");
   const getProducts = async () => {
     try {
+      setLoading(true);
       const fetcher = await fetch("https://fakestoreapi.com/products/");
       const data = await fetcher.json();
       setProducts(data);
@@ -14,6 +16,7 @@ export default function Products() {
     } catch (err) {
       alert(err.message);
     }
+    setLoading(false);
   }
   const productCategories = [ "All","jewelery","electronics","women's clothing","men's clothing"];
   const handleVisi = () => {
@@ -43,7 +46,8 @@ export default function Products() {
           return (
             <button
               className={`text-[#112233] hover:bg-[#112233] hover:text-white shadow-md btn btn-sm bg-white rounded-sm ${
-                category == choosenCategory && "bg-blue-500 text-[#fafafa] border-blue-500 outline-none"
+                category == choosenCategory &&
+                "bg-blue-500 text-[#fafafa] border-blue-500 outline-none"
               }}`}
               onClick={() => handleCategory(category)}
             >
@@ -73,13 +77,13 @@ export default function Products() {
         </div>
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[30px]">
-        {categoryProducts?.map((product) => (
-          <ProductCart product={product} key={product.id} />
-        ))}
-
-        {
-          categoryProducts.length == 0 &&  products.map(product => <ProductCart product={product} key={product.id}/>)
-        }
+        {categoryProducts.length > 0
+          ? categoryProducts?.map((product) => (
+              <ProductCart product={product} key={product.id} />
+            ))
+          : products?.map((product) => (
+              <ProductCart product={product} key={product.id} />
+            ))}
       </div>
     </div>
   );
