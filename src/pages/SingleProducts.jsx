@@ -1,10 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
+import AllProducts from '../API/products';
 import { addCart, removeFromCart } from '../features/cart/cartSlice';
 function SingleProducts() {
   const { id } = useParams();
-  const data = JSON.parse(sessionStorage.getItem("store")).find(e => e.id == id);
+  const data = AllProducts.find(e => e.id == id);
   const ratings = [...Array(Math.round(data.rating.rate)).keys()].map(
     (e) => "⭐"
   );

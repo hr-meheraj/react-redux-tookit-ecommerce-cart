@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
+import AllProducts from "../API/products";
 import ProductCart from "./ProductCart";
 
 export default function Products() {
-  const [products, setProducts] = useState([]);
-  const [categoryProducts, setCategoryProducts] = useState(products || []);
-  const [loading, setLoading] = useState(false);
-  const [choosenCategory, setChoosenCategory] = useState("All");
-  const getProducts = async () => {
-    try {
-      setLoading(true);
-      const fetcher = await fetch("https://fakestoreapi.com/products/");
-      const data = await fetcher.json();
-      setProducts(data);
-      sessionStorage.setItem("store", JSON.stringify(data));
-    } catch (err) {
-      alert(err.message);
-    }
-    setLoading(false);
-  };
+  const [products, setProducts] = useState(AllProducts);
+  const [categoryProducts, setCategoryProducts] = useState(products)
+  const [choosenCategory, setChoosenCategory] = useState(products);
+  // const getProducts = async () => {
+  //   try {
+  //     setCategoryProducts(JSON.parse(sessionStorage.getItem("store") || []));
+  //     const fetcher = await fetch("https://fakestoreapi.com/products/");
+  //     const data = await fetcher.json();
+  //     setProducts(data);
+  //     setCategoryProducts(data);
+  //     sessionStorage.setItem("store", JSON.stringify(data));
+  //   } catch (err) {
+  //     alert(err.message);
+  //   }
+  // };
   const productCategories = [
     "All",
     "jewelery",
@@ -25,14 +25,11 @@ export default function Products() {
     "women's clothing",
     "men's clothing",
   ];
-  const handleVisi = () => {
-    setCategoryProducts(products);
-  };
   const handleCategory = (category) => {
     setChoosenCategory(category);
     let filteredProducts = products;
     if (category == "All") {
-      filteredProducts = products;
+      filteredProducts = AllProducts;
     } else {
       filteredProducts = products.filter((e) => e.category == category);
     }
@@ -40,9 +37,9 @@ export default function Products() {
     setCategoryProducts(filteredProducts);
   };
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+  // useEffect(() => {
+  //   getProducts();
+  // }, []);
 
   return (
     <div className="mb-[50px]">
@@ -51,10 +48,7 @@ export default function Products() {
         {productCategories.map((category) => {
           return (
             <button
-              className={`text-[#112233] myBtn font-normal hover:bg-[#112233] hover:text-white shadow-md btn btn-sm  rounded-sm ${
-                category == choosenCategory &&
-                "text-[#fafafa] border-blue-500 bg-blue-500 font-bold outline-none"
-              }}`}
+              className={` rounded-md btn-sm ${ category == choosenCategory ?  " btn text-[#fafafa] border-blue-500 bg-blue-500 font-bold outline-none" : "text-[#112233] btn bg-white " }} hover:bg-blue-500 hover:text-white outline-none`}
               onClick={() => handleCategory(category)}
             >
               {category}
@@ -83,13 +77,10 @@ export default function Products() {
         </div>
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[30px]">
-        {categoryProducts.length > 0
-          ? categoryProducts?.map((product) => (
+        {products &&  categoryProducts?.map((product) => (
               <ProductCart product={product} key={product.id} />
             ))
-          : products?.map((product) => (
-              <ProductCart product={product} key={product.id} />
-            ))}
+         }
       </div>
     </div>
   );
