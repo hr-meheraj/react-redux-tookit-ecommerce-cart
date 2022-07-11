@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import ProductCart from './ProductCart';
+import React, { useState, useEffect } from "react";
+import ProductCart from "./ProductCart";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState(products || []);
-  const [loading ,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [choosenCategory, setChoosenCategory] = useState("All");
   const getProducts = async () => {
     try {
@@ -17,22 +17,28 @@ export default function Products() {
       alert(err.message);
     }
     setLoading(false);
-  }
-  const productCategories = [ "All","jewelery","electronics","women's clothing","men's clothing"];
+  };
+  const productCategories = [
+    "All",
+    "jewelery",
+    "electronics",
+    "women's clothing",
+    "men's clothing",
+  ];
   const handleVisi = () => {
-    setCategoryProducts(products)
-  }
+    setCategoryProducts(products);
+  };
   const handleCategory = (category) => {
     setChoosenCategory(category);
     let filteredProducts = products;
-    if(category == "All"){
-       filteredProducts = products
-    }else{
-       filteredProducts = products.filter((e) => e.category == category);
+    if (category == "All") {
+      filteredProducts = products;
+    } else {
+      filteredProducts = products.filter((e) => e.category == category);
     }
-    
+
     setCategoryProducts(filteredProducts);
-  }
+  };
 
   useEffect(() => {
     getProducts();
@@ -45,9 +51,9 @@ export default function Products() {
         {productCategories.map((category) => {
           return (
             <button
-              className={`text-[#112233] hover:bg-[#112233] hover:text-white shadow-md btn btn-sm bg-white rounded-sm ${
+              className={`text-[#112233] myBtn font-normal hover:bg-[#112233] hover:text-white shadow-md btn btn-sm  rounded-sm ${
                 category == choosenCategory &&
-                "bg-blue-500 text-[#fafafa] border-blue-500 outline-none"
+                "text-[#fafafa] border-blue-500 bg-blue-500 font-bold outline-none"
               }}`}
               onClick={() => handleCategory(category)}
             >
