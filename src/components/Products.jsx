@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ProductCart from './ProductCart';
 
 export default function Products() {
-  const [products, setProducts] = useState(JSON.parse(sessionStorage.getItem("store")) || []);
+  const [products, setProducts] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState(products || []);
   const [choosenCategory, setChoosenCategory] = useState("All");
   const getProducts = async () => {
@@ -16,7 +16,9 @@ export default function Products() {
     }
   }
   const productCategories = [ "All","jewelery","electronics","women's clothing","men's clothing"];
-
+  const handleVisi = () => {
+    setCategoryProducts(products)
+  }
   const handleCategory = (category) => {
     setChoosenCategory(category);
     let filteredProducts = products;
@@ -28,9 +30,11 @@ export default function Products() {
     
     setCategoryProducts(filteredProducts);
   }
+
   useEffect(() => {
     getProducts();
-  }, [])
+  }, []);
+
   return (
     <div className="mb-[50px]">
       <h2 className="text-xl mt-[20px] mb-[20px]">Products :</h2>
@@ -72,6 +76,10 @@ export default function Products() {
         {categoryProducts?.map((product) => (
           <ProductCart product={product} key={product.id} />
         ))}
+
+        {
+          categoryProducts.length == 0 &&  products.map(product => <ProductCart product={product} key={product.id}/>)
+        }
       </div>
     </div>
   );
