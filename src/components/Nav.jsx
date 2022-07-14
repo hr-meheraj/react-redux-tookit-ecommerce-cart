@@ -1,22 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { changeTheme } from "../features/theme/themeslice";
 function Nav() {
-  const cartArr = useSelector((state) => state.cart);
+  const cartArr = useSelector((state) => state.cartReducer.cart);
+  const theme = useSelector(state => state.themeReducer.theme);
   const [scrolling, setScrolling] = useState(0);
-  console.log(cartArr);
+  const dispatch = useDispatch();
 
+  console.log(document.body);
   useEffect(() => {
     document.addEventListener("scroll", () => {
       setScrolling(window.scrollY);
     });
   }, [scrolling]);
+
+  const handleThemeChanger = () => {
+    dispatch(changeTheme(theme == "cupcake" ? "dark" : "cupcake"));
+    const getLSTheme = localStorage.getItem("theme");
+    
+    if(getLSTheme == "cupcake"){
+      localStorage.setItem("theme", "dark");
+    }
+
+    if(getLSTheme == "dark"){
+      localStorage.setItem("theme", "cupcake");
+    }
+
+    if(!getLSTheme){
+      localStorage.setItem("theme", "dark");
+    }
+  }
+
   return (
     <div
-      className={`navbar z-50 ${
-        scrolling > 100 &&
-        "fixed border-2 border-blue shadow-md bg-white transition-all top-0 right-0 left-0  mx-auto max-w-[1000px]"
-      }`}
+      className={`navbar  ${theme == "dark" && "bg-[#2a303c]"} z-50 ${scrolling > 100 &&
+        "fixed border-2  shadow-md bg-white transition-all top-0 right-0 left-0  mx-auto max-w-[1000px]"
+        }  ${theme == "dark" && "border-none"}`}
     >
       <div className="flex-1">
         <Link
@@ -79,10 +99,10 @@ function Nav() {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a className="justify-between">
+              <Link to='/profile' className="justify-between">
                 Profile
                 <span className="badge">New</span>
-              </a>
+              </Link>
             </li>
             <div>
               <li>
@@ -97,6 +117,10 @@ function Nav() {
             </li>
             <li>
               <a>Logout</a>
+            </li>
+            <li onClick={handleThemeChanger} className='grid grid-cols-3 gap-3'>
+              <input type="checkbox" class="inline ml-[15px] toggle col-span-1  toggle-secondary mt-4 mb-2" checked={theme == "dark"} />
+              <span className="col-span-2">{theme == "dark" ? "Light Mode" : "Dark Mode"}</span>
             </li>
           </ul>
         </div>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { removeFromCart } from '../features/cart/cartSlice';
 
 export default function Cart() {
-  const cartItems = useSelector(state => state.cart);
+  const cartItems = useSelector(state => state.cartReducer.cart);
   const dispatch = useDispatch();
   const initialValue = 0;
   const totalPriceArr =  [];
@@ -13,11 +13,9 @@ export default function Cart() {
   const total = totalPriceArr.reduce(
     (previousValue, currentValue) => previousValue + currentValue, 0
   );
-  console.log(totalPriceArr);
-  console.log(total);
 
   return (
-    <div className="my-[40px] ">
+    <div className="py-[40px] pb-[720px]">
       <div class="overflow-x-auto w-full">
         <table class="table table-compact w-full">
           <thead>

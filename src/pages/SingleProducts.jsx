@@ -5,18 +5,18 @@ import AllProducts from '../API/products';
 import { addCart, removeFromCart } from '../features/cart/cartSlice';
 function SingleProducts() {
   const { id } = useParams();
+  const theme = useSelector(state => state.themeReducer.theme);
   const data = AllProducts.find(e => e.id == id);
   const ratings = [...Array(Math.round(data.rating.rate)).keys()].map(
     (e) => "⭐"
   );
-  console.log("insdie ratings", ratings);
   const dispatch = useDispatch();
-  const cartItems = useSelector(state => state.cart);
+  const cartItems = useSelector(state => state.cartReducer.cart);
   const checkExists = cartItems.find(cart => cart.id == data.id)
   return (
-    <div className="gap-[30px] mt-[20px] grid grid-cols-1 md:grid-cols-2 mx-auto max-w-[820px]">
+    <div className={`h-screen gap-[30px] mt-[20px] grid grid-cols-1 md:grid-cols-2 mx-auto max-w-[820px] ${theme == "dark" && "bg-[##131320]"}`}>
       <div>
-        <div className="card bg-white shadow-xl transition-all h-[500px] rounded-md">
+        <div className="card  shadow-xl transition-all h-[500px] rounded-md">
           <figure>
             <img
               src={data.image}

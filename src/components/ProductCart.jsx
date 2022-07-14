@@ -5,14 +5,16 @@ import { addCart, removeFromCart } from '../features/cart/cartSlice';
 export default function ProductCart({ product }) {
   const { title, image, price, category, id } = product;
   const dispatch = useDispatch();
-  const cartArr = useSelector(state => state.cart);
+  const theme = useSelector(state => state.themeReducer.theme)
+  const cartArr = useSelector(state => state.cartReducer.cart);
   const checkExists  = cartArr.find(e => e.id == product.id);
   const handleAdd = () => {
     dispatch(addCart(product))
   }
+
   return (
     <div>
-      <div className="card bg-white  shadow-xl transition-all h-[500px] rounded-md hover:shadow-lg hover:bg-[#112233dd] hover:text-white">
+      <div className={`card   shadow-xl transition-all h-[500px] rounded-md hover:shadow-lg hover:bg-[#112233dd] hover:text-white ${theme == "dark" && "bg-[##131320]"} `}>
         <figure><img src={image} className='p-4 w-full h-[300px] rounded-[20px]' alt={title} /></figure>
         <div className="card-body">
           <Link to={`/products/${id}`} className="card-title cursor-pointer hover:text-blue-500 scale-1">{title.slice(0, 30)}</Link>

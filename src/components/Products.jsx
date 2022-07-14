@@ -42,7 +42,7 @@ export default function Products() {
   // }, []);
 
   return (
-    <div className="mb-[50px]">
+    <div className="pb-[50px]">
       <h2 className="text-xl mt-[20px] mb-[20px]">Products :</h2>
       <div className="my-[20px]  justify-center flex gap-[10px] flex-wrap mb-[40px]">
         {productCategories.map((category) => {
