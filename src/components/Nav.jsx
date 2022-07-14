@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { changeTheme } from "../features/theme/themeslice";
+import logo from '../assets/logo.png'
 function Nav() {
   const cartArr = useSelector((state) => state.cartReducer.cart);
   const theme = useSelector(state => state.themeReducer.theme);
@@ -40,7 +41,8 @@ function Nav() {
           to="/"
           className=" hover:transtion-all normal-case md:text-xl  text-[16px]"
         >
-          Redux Ecommerce
+          {/* Redux Ecommerce */}
+          <img src={logo} className="w-[140px]"/>
         </Link>
       </div>
       <div className="hidden md:flex-none md:block">
