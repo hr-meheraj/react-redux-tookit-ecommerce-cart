@@ -18,26 +18,23 @@ function Nav() {
   const handleThemeChanger = () => {
     dispatch(changeTheme(theme == "cupcake" ? "dark" : "cupcake"));
     const getLSTheme = localStorage.getItem("theme");
-    
-    if(getLSTheme == "cupcake"){
+
+    if (getLSTheme == "cupcake") {
       localStorage.setItem("theme", "dark");
     }
 
-    if(getLSTheme == "dark"){
+    if (getLSTheme == "dark") {
       localStorage.setItem("theme", "cupcake");
     }
 
-    if(!getLSTheme){
+    if (!getLSTheme) {
       localStorage.setItem("theme", "dark");
     }
   }
 
   return (
     <div
-      className={`navbar  ${theme == "dark" && "bg-[#2a303c]"} z-50 ${scrolling > 100 &&
-        "fixed border-2  shadow-md bg-white transition-all top-0 right-0 left-0  mx-auto max-w-[1000px]"
-        }  ${theme == "dark" && "border-none"}`}
-    >
+      className={`navbar  z-50 ${scrolling > 100 && "fixed border-2  shadow-md  transition-all top-0 right-0 left-0  mx-auto max-w-[1000px]"}  ${theme == "dark" && "border-none"}  ${theme == "dark" ? "bg-[#2a303c]" : "bg-white"}`} >
       <div className="flex-1">
         <Link
           to="/"
